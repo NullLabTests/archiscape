@@ -1,0 +1,913 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d10" for="edge" attr.name="relation" attr.type="string"/>
+<key id="d9" for="node" attr.name="attributes" attr.type="string"/>
+<key id="d8" for="node" attr.name="decorators" attr.type="string"/>
+<key id="d7" for="node" attr.name="imports" attr.type="string"/>
+<key id="d6" for="node" attr.name="parent" attr.type="string"/>
+<key id="d5" for="node" attr.name="layer" attr.type="string"/>
+<key id="d4" for="node" attr.name="docstring" attr.type="string"/>
+<key id="d3" for="node" attr.name="lineno" attr.type="long"/>
+<key id="d2" for="node" attr.name="filepath" attr.type="string"/>
+<key id="d1" for="node" attr.name="kind" attr.type="string"/>
+<key id="d0" for="node" attr.name="name" attr.type="string"/>
+<graph edgedefault="directed"><node id="archiscape">
+  <data key="d0">archiscape</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/__init__.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6"></data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.__main__">
+  <data key="d0">archiscape.__main__</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/__main__.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "cli.main", "alias": null, "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer">
+  <data key="d0">archiscape.analyzer</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "ast", "alias": null, "kind": "stdlib"}, {"name": "os", "alias": null, "kind": "stdlib"}, {"name": "pathlib.Path", "alias": null, "kind": "stdlib"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.CodeEntity">
+  <data key="d0">CodeEntity</data>
+  <data key="d1">class</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">39</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.CodeEntity.__init__">
+  <data key="d0">__init__</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">40</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.CodeEntity</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.CodeEntity.full_name">
+  <data key="d0">full_name</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">53</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.CodeEntity</data>
+  <data key="d7">[]</data>
+  <data key="d8">["property"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.CodeEntity.module_path">
+  <data key="d0">module_path</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">59</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.CodeEntity</data>
+  <data key="d7">[]</data>
+  <data key="d8">["property"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.CodeEntity.to_dict">
+  <data key="d0">to_dict</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">63</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.CodeEntity</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.classify_import">
+  <data key="d0">classify_import</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">79</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer._should_skip">
+  <data key="d0">_should_skip</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">92</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer">
+  <data key="d0">Analyzer</data>
+  <data key="d1">class</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">97</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer.__init__">
+  <data key="d0">__init__</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">98</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer.scan">
+  <data key="d0">scan</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">105</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer._find_readme">
+  <data key="d0">_find_readme</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">123</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer._analyze_file">
+  <data key="d0">_analyze_file</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">130</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer._extract_imports">
+  <data key="d0">_extract_imports</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">164</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer._extract_entity">
+  <data key="d0">_extract_entity</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">183</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.analyzer.Analyzer._build_report">
+  <data key="d0">_build_report</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/analyzer.py</data>
+  <data key="d3">222</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.analyzer.Analyzer</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli">
+  <data key="d0">archiscape.cli</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">presentation</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "json", "alias": null, "kind": "stdlib"}, {"name": "typer", "alias": null, "kind": "third_party"}, {"name": "pathlib.Path", "alias": null, "kind": "stdlib"}, {"name": "rich.console.Console", "alias": null, "kind": "third_party"}, {"name": "rich.table.Table", "alias": null, "kind": "third_party"}, {"name": "rich.panel.Panel", "alias": null, "kind": "third_party"}, {"name": "rich.box", "alias": null, "kind": "third_party"}, {"name": "rich.progress.Progress", "alias": null, "kind": "third_party"}, {"name": "rich.progress.SpinnerColumn", "alias": null, "kind": "third_party"}, {"name": "rich.progress.TextColumn", "alias": null, "kind": "third_party"}, {"name": "VERSION", "alias": null, "kind": "third_party"}, {"name": "analyzer.Analyzer", "alias": null, "kind": "third_party"}, {"name": "graph.build_graph", "alias": null, "kind": "third_party"}, {"name": "graph.detect_communities", "alias": null, "kind": "third_party"}, {"name": "graph.compute_metrics", "alias": null, "kind": "third_party"}, {"name": "graph.generate_llm_narrative", "alias": null, "kind": "third_party"}, {"name": "smells.detect_smells", "alias": null, "kind": "third_party"}, {"name": "renderers.markdown.generate_markdown", "alias": null, "kind": "third_party"}, {"name": "renderers.html.generate_html", "alias": null, "kind": "third_party"}, {"name": "exporters.export_graphml", "alias": null, "kind": "third_party"}, {"name": "exporters.export_mermaid", "alias": null, "kind": "third_party"}, {"name": "exporters.export_markdown_architecture_report", "alias": null, "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli.scan">
+  <data key="d0">scan</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">23</data>
+  <data key="d4">Scan a codebase and export raw architecture data as JSON.</data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">["app.command()"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli.doc">
+  <data key="d0">doc</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">52</data>
+  <data key="d4">Generate comprehensive architecture documentation.</data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">["app.command()"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli.summary">
+  <data key="d0">summary</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">95</data>
+  <data key="d4">Print a quick architecture summary to the terminal.</data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">["app.command()"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli.smells">
+  <data key="d0">smells</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">108</data>
+  <data key="d4">Detect architecture smells in a codebase.</data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">["app.command()"]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli._analyze">
+  <data key="d0">_analyze</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">127</data>
+  <data key="d4"></data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli._print_summary">
+  <data key="d0">_print_summary</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">155</data>
+  <data key="d4"></data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli._print_hubs">
+  <data key="d0">_print_hubs</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">186</data>
+  <data key="d4"></data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.cli.main">
+  <data key="d0">main</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/cli.py</data>
+  <data key="d3">204</data>
+  <data key="d4"></data>
+  <data key="d5">presentation</data>
+  <data key="d6">archiscape.cli</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters">
+  <data key="d0">archiscape.exporters</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "json", "alias": null, "kind": "stdlib"}, {"name": "collections.defaultdict", "alias": null, "kind": "stdlib"}, {"name": "networkx", "alias": "nx", "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters._graphml_clean">
+  <data key="d0">_graphml_clean</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">5</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters.export_graphml">
+  <data key="d0">export_graphml</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">15</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters.export_mermaid">
+  <data key="d0">export_mermaid</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">32</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters.export_markdown_architecture_report">
+  <data key="d0">export_markdown_architecture_report</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">78</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters._get_networkx">
+  <data key="d0">_get_networkx</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">139</data>
+  <data key="d4"></data>
+  <data key="d5">infrastructure</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters._mermaid_id">
+  <data key="d0">_mermaid_id</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">147</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters._layer_fill">
+  <data key="d0">_layer_fill</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">180</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.exporters._layer_stroke">
+  <data key="d0">_layer_stroke</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/exporters.py</data>
+  <data key="d3">184</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.exporters</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph">
+  <data key="d0">archiscape.graph</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "json", "alias": null, "kind": "stdlib"}, {"name": "os", "alias": null, "kind": "stdlib"}, {"name": "collections.defaultdict", "alias": null, "kind": "stdlib"}, {"name": "urllib.request.Request", "alias": null, "kind": "stdlib"}, {"name": "urllib.request.urlopen", "alias": null, "kind": "stdlib"}, {"name": "urllib.error.URLError", "alias": null, "kind": "stdlib"}, {"name": "networkx", "alias": "nx", "kind": "third_party"}, {"name": "networkx.algorithms.community.greedy_modularity_communities", "alias": null, "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.detect_layer_heuristic">
+  <data key="d0">detect_layer_heuristic</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">35</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.classify_with_llm">
+  <data key="d0">classify_with_llm</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">48</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.generate_llm_narrative">
+  <data key="d0">generate_llm_narrative</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">80</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.build_graph">
+  <data key="d0">build_graph</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">120</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph._collect_names">
+  <data key="d0">_collect_names</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">182</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph._collect_children">
+  <data key="d0">_collect_children</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">189</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph._resolve_import_target">
+  <data key="d0">_resolve_import_target</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">197</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.detect_communities">
+  <data key="d0">detect_communities</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">206</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.graph.compute_metrics">
+  <data key="d0">compute_metrics</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/graph.py</data>
+  <data key="d3">219</data>
+  <data key="d4"></data>
+  <data key="d5">analysis</data>
+  <data key="d6">archiscape.graph</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers">
+  <data key="d0">archiscape.renderers</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/__init__.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6"></data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers.html">
+  <data key="d0">archiscape.renderers.html</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/html.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "json", "alias": null, "kind": "stdlib"}, {"name": "os", "alias": null, "kind": "stdlib"}, {"name": "jinja2.Environment", "alias": null, "kind": "third_party"}, {"name": "jinja2.FileSystemLoader", "alias": null, "kind": "third_party"}, {"name": "graph.LAYER_COLORS", "alias": null, "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers.html.generate_html">
+  <data key="d0">generate_html</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/html.py</data>
+  <data key="d3">11</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6">archiscape.renderers.html</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers.markdown">
+  <data key="d0">archiscape.renderers.markdown</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/markdown.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "graph.LAYER_COLORS", "alias": null, "kind": "third_party"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers.markdown.generate_markdown">
+  <data key="d0">generate_markdown</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/markdown.py</data>
+  <data key="d3">4</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6">archiscape.renderers.markdown</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.renderers.markdown._render_module">
+  <data key="d0">_render_module</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/renderers/markdown.py</data>
+  <data key="d3">70</data>
+  <data key="d4"></data>
+  <data key="d5">rendering</data>
+  <data key="d6">archiscape.renderers.markdown</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells">
+  <data key="d0">archiscape.smells</data>
+  <data key="d1">module</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">1</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6"></data>
+  <data key="d7">[{"name": "networkx", "alias": "nx", "kind": "third_party"}, {"name": "collections.defaultdict", "alias": null, "kind": "stdlib"}]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells.detect_smells">
+  <data key="d0">detect_smells</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">5</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._score">
+  <data key="d0">_score</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">20</data>
+  <data key="d4"></data>
+  <data key="d5">domain</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_god_modules">
+  <data key="d0">_detect_god_modules</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">24</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_circular_dependencies">
+  <data key="d0">_detect_circular_dependencies</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">48</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_unstable_interfaces">
+  <data key="d0">_detect_unstable_interfaces</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">71</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_dense_coupling">
+  <data key="d0">_detect_dense_coupling</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">107</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_isolated_components">
+  <data key="d0">_detect_isolated_components</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">136</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_documentation_debt">
+  <data key="d0">_detect_documentation_debt</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">167</data>
+  <data key="d4"></data>
+  <data key="d5">infrastructure</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<node id="archiscape.smells._detect_broadcast_dependencies">
+  <data key="d0">_detect_broadcast_dependencies</data>
+  <data key="d1">function</data>
+  <data key="d2">/home/illy/openended/archiscape/archiscape/smells.py</data>
+  <data key="d3">188</data>
+  <data key="d4"></data>
+  <data key="d5">other</data>
+  <data key="d6">archiscape.smells</data>
+  <data key="d7">[]</data>
+  <data key="d8">[]</data>
+  <data key="d9">[]</data>
+</node>
+<edge source="archiscape.analyzer" target="archiscape.analyzer.CodeEntity">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer" target="archiscape.analyzer.classify_import">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer" target="archiscape.analyzer._should_skip">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer" target="archiscape.analyzer.Analyzer">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.CodeEntity" target="archiscape.analyzer.CodeEntity.__init__">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.CodeEntity" target="archiscape.analyzer.CodeEntity.full_name">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.CodeEntity" target="archiscape.analyzer.CodeEntity.module_path">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.CodeEntity" target="archiscape.analyzer.CodeEntity.to_dict">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer.__init__">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer.scan">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer._find_readme">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer._analyze_file">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer._extract_imports">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer._extract_entity">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.analyzer.Analyzer" target="archiscape.analyzer.Analyzer._build_report">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli.scan">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli.doc">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli.summary">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli.smells">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli._analyze">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli._print_summary">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli._print_hubs">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.cli" target="archiscape.cli.main">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters._graphml_clean">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters.export_graphml">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters.export_mermaid">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters.export_markdown_architecture_report">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters._get_networkx">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters._mermaid_id">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters._layer_fill">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.exporters" target="archiscape.exporters._layer_stroke">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.detect_layer_heuristic">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.classify_with_llm">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.generate_llm_narrative">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.build_graph">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph._collect_names">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph._collect_children">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph._resolve_import_target">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.detect_communities">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.graph" target="archiscape.graph.compute_metrics">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.renderers.html" target="archiscape.renderers.html.generate_html">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.renderers.markdown" target="archiscape.renderers.markdown.generate_markdown">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.renderers.markdown" target="archiscape.renderers.markdown._render_module">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells.detect_smells">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._score">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_god_modules">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_circular_dependencies">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_unstable_interfaces">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_dense_coupling">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_isolated_components">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_documentation_debt">
+  <data key="d10">contains</data>
+</edge>
+<edge source="archiscape.smells" target="archiscape.smells._detect_broadcast_dependencies">
+  <data key="d10">contains</data>
+</edge>
+</graph></graphml>

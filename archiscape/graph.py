@@ -77,6 +77,46 @@ def classify_with_llm(entities, api_key, model="gpt-4o-mini", base_url="https://
         return {}
 
 
+def generate_llm_narrative(metrics, analysis, api_key, model="gpt-4o-mini", base_url="https://api.openai.com/v1"):
+    hubs = metrics.get("hubs", [])
+    layers = metrics.get("layers", {})
+    smells_str = ", ".join(analysis.get("smells", [])) if analysis.get("smells") else "none detected"
+    top_hubs = "; ".join(f"{h['name']} ({h['degree']} edges, {h['layer']})" for h in hubs[:5])
+    layers_str = ", ".join(f"{k}: {v}" for k, v in sorted(layers.items(), key=lambda x: -x[1]))
+
+    prompt = (
+        "You are a software architecture analyst. Summarize this codebase's architecture "
+        "in 3-4 concise paragraphs based on these metrics:\n\n"
+        f"- Components: {metrics.get('num_nodes', 0)}, Dependencies: {metrics.get('num_edges', 0)}\n"
+        f"- Graph density: {metrics.get('density', 0):.3f}\n"
+        f"- Communities detected: {metrics.get('num_communities', 0)}\n"
+        f"- Layers: {layers_str}\n"
+        f"- Top hubs: {top_hubs}\n"
+        f"- Architecture smells: {smells_str}\n"
+        + (f"- Project readme: {analysis.get('readme', '')[:500]}\n" if analysis.get("readme") else "")
+        + "\nDescribe the overall architecture, notable patterns, risks, and recommendations."
+    )
+    payload = json.dumps({
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.3,
+    }).encode()
+    req = Request(
+        f"{base_url.rstrip('/')}/chat/completions",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        resp = urlopen(req, timeout=30)
+        body = json.loads(resp.read())
+        return body["choices"][0]["message"]["content"]
+    except (URLError, KeyError, json.JSONDecodeError):
+        return None
+
+
 def build_graph(analysis, llm_key=None, llm_model=None):
     G = nx.DiGraph()
     entities = analysis.get("entities", [])
@@ -87,10 +127,12 @@ def build_graph(analysis, llm_key=None, llm_model=None):
 
     llm_layers = {}
     if llm_key and flat_names:
-        name_only = [{"name": n} for n in flat_names[:50]]
-        result = classify_with_llm(name_only, llm_key, llm_model or "gpt-4o-mini")
-        if result:
-            llm_layers = result
+        chunks = [flat_names[i:i + 50] for i in range(0, len(flat_names), 50)]
+        for chunk in chunks:
+            name_only = [{"name": n} for n in chunk]
+            result = classify_with_llm(name_only, llm_key, llm_model or "gpt-4o-mini")
+            if result:
+                llm_layers.update(result)
 
     def add_entity(entity, parent_name=None):
         full_name = entity.get("full_name", entity["name"])
@@ -220,6 +262,7 @@ def compute_metrics(G):
                         "fan_in": fan_in.get(n, 0),
                         "fan_out": fan_out.get(n, 0),
                         "layer": layer,
+                        "imports": len(data.get("imports", [])),
                     })
         hubs.sort(key=lambda x: -x["degree"])
         metrics["hubs"] = hubs[:10]

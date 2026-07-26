@@ -33,6 +33,8 @@ STDLIB_MODULES = {
     "weakref", "operator", "keyword",
 }
 
+DEPTH_LEVELS = {"module": 0, "class": 1, "function": 2}
+
 
 class CodeEntity:
     def __init__(self, name, kind, filepath, lineno, docstring=None, parent=None):
@@ -80,28 +82,50 @@ def classify_import(name):
     return "third_party"
 
 
+EXCLUDE_DIRS = {
+    "node_modules", "__pycache__", ".git", ".venv", "venv",
+    "env", "dist", "build", ".egg-info", ".tox",
+    "mypy_cache", ".pytest_cache", ".ruff_cache",
+}
+
+
+def _should_skip(rel_path):
+    parts = rel_path.split(os.sep)
+    return any(p in EXCLUDE_DIRS for p in parts)
+
+
 class Analyzer:
-    def __init__(self, path):
+    def __init__(self, path, depth="function"):
         self.path = Path(path).resolve()
+        self.depth = DEPTH_LEVELS.get(depth, 2)
         self.entities = []
         self.file_entities = {}
+        self.readme_text = None
 
     def scan(self):
         py_files = sorted(self.path.rglob("*.py"))
         for filepath in py_files:
             rel = os.path.relpath(filepath, self.path)
-            parts = rel.split(os.sep)
-            skip = False
-            for p in parts:
-                if p in ("node_modules", "__pycache__", ".git", ".venv",
-                         "venv", "env", "dist", "build", ".egg-info",
-                         ".tox", "mypy_cache", ".pytest_cache", ".ruff_cache"):
-                    skip = True
-                    break
-            if skip:
+            if _should_skip(rel):
                 continue
             self._analyze_file(filepath)
+
+        readme = self._find_readme()
+        if readme:
+            try:
+                with open(readme, encoding="utf-8") as f:
+                    self.readme_text = f.read()[:3000]
+            except Exception:
+                pass
+
         return self._build_report()
+
+    def _find_readme(self):
+        for name in ("README.md", "README.rst", "README.txt", "README"):
+            candidate = self.path / name
+            if candidate.exists():
+                return candidate
+        return None
 
     def _analyze_file(self, filepath):
         try:
@@ -129,8 +153,10 @@ class Analyzer:
         )
 
         self._extract_imports(tree, mod_entity)
-        for node in ast.iter_child_nodes(tree):
-            self._extract_entity(node, mod_entity, source)
+
+        if self.depth >= 1:
+            for node in ast.iter_child_nodes(tree):
+                self._extract_entity(node, mod_entity, source, depth=1)
 
         self.entities.append(mod_entity)
         self.file_entities[rel_path] = mod_entity
@@ -154,7 +180,7 @@ class Analyzer:
                         "kind": classify_import(module_base or alias.name),
                     })
 
-    def _extract_entity(self, node, parent, source):
+    def _extract_entity(self, node, parent, source, depth=1):
         if isinstance(node, ast.ClassDef):
             doc = ast.get_docstring(node)
             cls = CodeEntity(
@@ -168,15 +194,15 @@ class Analyzer:
             for dec in node.decorator_list:
                 cls.decorators.append(ast.unparse(dec))
             for item in ast.iter_child_nodes(node):
-                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    self._extract_entity(item, cls, source)
-                elif isinstance(item, ast.Assign):
+                if isinstance(item, ast.Assign):
                     for target in item.targets:
                         if isinstance(target, ast.Name):
                             cls.attributes.append(target.id)
                 elif isinstance(item, ast.AnnAssign):
                     if isinstance(item.target, ast.Name):
                         cls.attributes.append(item.target.id)
+                if self.depth >= 2 and isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    self._extract_entity(item, cls, source, depth + 1)
             parent.children.append(cls)
 
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -199,4 +225,5 @@ class Analyzer:
             "project_root": str(self.path),
             "modules_count": len(self.entities),
             "entities": nodes,
+            "readme": self.readme_text,
         }
