@@ -93,21 +93,27 @@ Running `archiscape doc` on its own codebase:
 │ Archiscape v0.1.0 — Architecture Report                                      │
 │ /home/user/archiscape                                                        │
 │                                                                              │
-│ Components: 34   Dependencies: 28   Density: 0.025   Communities: 3         │
+│ Components: 62   Dependencies: 52   Density: 0.014   Communities: 11 ⚠ 1     │
+│ issues                                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 
     Architectural Layers
-  Layer          Components   Proportion
- ───────────────────────────────────────
-  Analysis       21           62%
-  Rendering      6            18%
-  Presentation   6            18%
-  Other          1             3%
+  Layer            Components   Proportion
+ ──────────────────────────────────────────
+  Analysis         28           45%
+  Other            15           24%
+  Presentation     9            15%
+  Rendering        7            11%
+  Infrastructure   2            3%
+  Domain           1            2%
 
 Most Connected Components (Hubs)
-  archiscape.analyzer         13 edges   fan-in:3   fan-out:10   analysis
-  archiscape.cli              10 edges   fan-in:0   fan-out:10   presentation
-  archiscape.graph             5 edges   fan-in:2   fan-out:3    analysis
+  Component                 Degree   Fan-in   Fan-out   Imports   Layer
+  archiscape.graph          9        0        9         8         analysis
+  archiscape.smells         9        0        9         2         other
+  archiscape.cli            8        0        8         22        presentation
+  archiscape.exporters      8        0        8         3         other
+  archiscape.analyzer       4        0        4         3         analysis
 ```
 
 Architecture smell detection finds actionable issues:
@@ -217,14 +223,14 @@ archiscape/
 
 ## Comparison to Related Tools
 
-| Tool | Focus | Codebase Dep | Graph Viz | Layer Detection | Smell Detection | Community Detection | Coupling Metrics | LLM-Augmented | Export |
+| Tool | Focus | Analysis | Graph Viz | Layer Detection | Smells | Communities | Coupling | LLM | Export |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **Archiscape** | Architecture intelligence | Static (AST) | Interactive D3.js | Heuristic + optional LLM | 7 types | Yes | Fan-in/out, density, hubs | Yes | GraphML, Mermaid, JSON |
-| pydeps | Dependency viz | Static (imports) | Static dot | No | No | No | No | No | PNG, SVG |
-| pyreverse (pylint) | UML class diagrams | Static | Static dot/plantuml | No | No | No | No | No | PNG, SVG |
-| code2flow | Call graphs | Static/dynamic | Static | No | No | No | No | No | PNG, SVG |
-| deply | Architecture validation | Static | Rule-based | Manual tagging | No | No | No | No | Custom |
-| Structure101 | Architecture analysis | Static | Hierarchical | Manual | Yes | No | Yes | No | Custom |
+| **Archiscape** | Architecture intelligence | Static (AST) | Interactive D3.js | Heuristic + LLM | 7 types | Yes | Fan-in/out, hubs | Yes | GraphML, Mermaid, JSON |
+| pydeps | Dependency viz | Static (imports) | Static dot | — | — | — | — | — | PNG, SVG |
+| pyreverse (pylint) | UML class diagrams | Static | Static dot/plantuml | — | — | — | — | — | PNG, SVG |
+| code2flow | Call graphs | Static/dynamic | Static | — | — | — | — | — | PNG, SVG |
+| deply | Arch validation | Static | Rule-based | Manual | — | — | — | — | Custom |
+| Structure101 | Arch analysis | Static | Hierarchical | Manual | Yes | — | Yes | — | Custom |
 
 Archiscape is unique in combining **AST-level extraction**, **optional LLM-based semantic classification**, **graph-theoretic metrics**, and **interactive visualization** in a single open-source tool designed for both development workflows and software engineering research.
 
