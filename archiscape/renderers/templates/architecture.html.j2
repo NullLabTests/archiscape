@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archiscape — Architecture Graph</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+#container { display: flex; height: 100vh; }
+#sidebar { width: 320px; background: #161b22; padding: 20px; overflow-y: auto; border-right: 1px solid #30363d; flex-shrink: 0; }
+#sidebar h1 { font-size: 20px; margin-bottom: 2px; color: #58a6ff; }
+#sidebar .subtitle { font-size: 11px; color: #8b949e; margin-bottom: 16px; word-break: break-all; }
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 16px; }
+.metric-card { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 8px; text-align: center; }
+.metric-card .value { font-size: 18px; font-weight: 700; color: #58a6ff; }
+.metric-card .label { font-size: 10px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; }
+#sidebar h2 { font-size: 12px; margin: 12px 0 6px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; }
+.layer-item { display: flex; align-items: center; padding: 3px 0; font-size: 12px; }
+.layer-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; flex-shrink: 0; }
+.layer-count { margin-left: auto; color: #8b949e; font-size: 11px; }
+#info-panel { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-top: 8px; display: none; }
+#info-panel h3 { font-size: 13px; margin-bottom: 4px; color: #58a6ff; word-break: break-all; }
+#info-panel p { font-size: 11px; color: #8b949e; margin-bottom: 2px; }
+#info-panel .doc { font-size: 11px; color: #c9d1d9; margin-top: 4px; padding: 6px; background: #161b22; border-radius: 4px; max-height: 100px; overflow-y: auto; }
+#search { width: 100%; padding: 6px 10px; border: 1px solid #30363d; border-radius: 6px; background: #0d1117; color: #c9d1d9; font-size: 12px; margin-bottom: 8px; outline: none; }
+#search:focus { border-color: #58a6ff; }
+#graph { flex: 1; position: relative; }
+#tooltip { position: absolute; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 8px 10px; font-size: 11px; pointer-events: none; display: none; z-index: 100; max-width: 350px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+#tooltip .tt-name { font-weight: 600; color: #58a6ff; }
+#tooltip .tt-detail { color: #8b949e; margin-top: 2px; }
+#tooltip .tt-doc { color: #c9d1d9; margin-top: 4px; font-size: 10px; }
+.node-label { font-size: 9px; pointer-events: none; fill: #8b949e; text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
+.link { stroke-opacity: 0.2; }
+.link-imports { stroke: #58a6ff; }
+.link-contains { stroke: #3fb950; stroke-dasharray: 3 2; stroke-opacity: 0.15; }
+.node:hover circle { stroke: #f0f6fc !important; stroke-width: 2.5px !important; filter: brightness(1.2); }
+#legend { position: absolute; bottom: 16px; right: 16px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 8px 10px; font-size: 10px; }
+#legend .leg-title { font-weight: 600; margin-bottom: 4px; color: #8b949e; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.leg-item { display: flex; align-items: center; margin: 2px 0; }
+.leg-color { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.leg-line { margin-right: 6px; }
+.leg-label { color: #8b949e; }
+#loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+#loading .spinner { width: 32px; height: 32px; border: 3px solid #30363d; border-top: 3px solid #58a6ff; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading .msg { color: #8b949e; font-size: 12px; }
+.count-badge { background: #21262d; color: #8b949e; border-radius: 10px; padding: 0 6px; font-size: 10px; margin-left: 4px; }
+.hub-item { font-size: 11px; padding: 2px 0; color: #8b949e; }
+.hub-item .hub-name { color: #c9d1d9; }
+.hub-degree { color: #58a6ff; margin-left: 4px; }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="sidebar">
+    <h1>Archiscape</h1>
+    <div class="subtitle">{{ project_root }}</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="value">{{ num_nodes }}</div><div class="label">Components</div></div>
+      <div class="metric-card"><div class="value">{{ num_edges }}</div><div class="label">Dependencies</div></div>
+      <div class="metric-card"><div class="value">{{ density }}</div><div class="label">Density</div></div>
+      <div class="metric-card"><div class="value">{{ num_communities }}</div><div class="label">Communities</div></div>
+    </div>
+    <h2>Layers</h2>
+    <div id="layers"></div>
+    <h2>Top Hubs</h2>
+    <div id="hubs">
+      {% for hub in hubs %}
+      <div class="hub-item"><span class="hub-name">{{ hub.name }}</span><span class="hub-degree">({{ hub.degree }} edges, {{ hub.layer }})</span></div>
+      {% endfor %}
+    </div>
+    <h2>Explorer</h2>
+    <input id="search" type="text" placeholder="Search components..." />
+    <div id="info-panel">
+      <h3 id="info-name"></h3>
+      <p id="info-kind"></p>
+      <p id="info-file"></p>
+      <div class="doc" id="info-doc">(no documentation)</div>
+    </div>
+  </div>
+  <div id="graph">
+    <div id="loading"><div class="spinner"></div><div class="msg">Rendering graph…</div></div>
+    <div id="tooltip"></div>
+    <div id="legend">
+      <div class="leg-title">Legend</div>
+      <div class="leg-item"><svg width="14" height="4" class="leg-line"><line x1="0" y1="2" x2="14" y2="2" stroke="#58a6ff" stroke-width="1.5" opacity="0.6"/></svg><span class="leg-label">Imports</span></div>
+      <div class="leg-item"><svg width="14" height="4" class="leg-line"><line x1="0" y1="2" x2="14" y2="2" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.4"/></svg><span class="leg-label">Contains</span></div>
+    </div>
+  </div>
+</div>
+<script>
+const NODES = {{ nodes_json }};
+const LINKS = {{ links_json }};
+const LAYERS = {{ layers_json }};
+const COMM_MAP = {{ communities_json }};
+
+// --- Render layers ---
+const layersDiv = document.getElementById('layers');
+LAYERS.forEach(l => {
+  const div = document.createElement('div');
+  div.className = 'layer-item';
+  div.innerHTML = `<span class="layer-dot" style="background:${l.color}"></span>${l.name}<span class="layer-count">${l.count}</span>`;
+  layersDiv.appendChild(div);
+});
+
+// --- D3 graph ---
+const W = document.getElementById('graph').clientWidth;
+const H = document.getElementById('graph').clientHeight;
+
+const svg = d3.select('#graph').append('svg').attr('width', W).attr('height', H);
+const g = svg.append('g');
+
+svg.call(d3.zoom().scaleExtent([0.05, 8]).on('zoom', (e) => g.attr('transform', e.transform)));
+
+const sim = d3.forceSimulation(NODES)
+  .force('link', d3.forceLink(LINKS).id(d => d.id).distance(d => d.relation === 'contains' ? 30 : 80))
+  .force('charge', d3.forceManyBody().strength(-300))
+  .force('center', d3.forceCenter(W / 2, H / 2))
+  .force('collision', d3.forceCollide().radius(d => d.kind === 'module' ? 12 : 8));
+
+const link = g.append('g').selectAll('line').data(LINKS).join('line')
+  .attr('class', d => `link link-${d.relation}`)
+  .attr('stroke-width', d => d.relation === 'contains' ? 0.6 : 0.8);
+
+const node = g.append('g').selectAll('g').data(NODES).join('g')
+  .call(d3.drag()
+    .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+    .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+    .on('end', (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; })
+  );
+
+node.append('circle')
+  .attr('r', d => d.kind === 'module' ? 7 : d.kind === 'class' ? 5 : 3)
+  .attr('fill', d => d.color)
+  .attr('stroke', '#0d1117')
+  .attr('stroke-width', 1.5);
+
+node.append('text')
+  .text(d => d.name.length > 18 ? d.name.slice(0, 15) + '…' : d.name)
+  .attr('class', 'node-label')
+  .attr('dx', 8)
+  .attr('dy', 3);
+
+node.on('mouseover', (e, d) => {
+  const tt = d3.select('#tooltip');
+  const rect = document.getElementById('graph').getBoundingClientRect();
+  tt.style('display', 'block')
+    .style('left', Math.min(e.clientX - rect.left + 14, rect.width - 360) + 'px')
+    .style('top', Math.max(e.clientY - rect.top - 12, 4) + 'px');
+  tt.html(`<div class="tt-name">${d.id}</div><div class="tt-detail">${d.kind} · ${d.layer}${d.imports ? ' · ' + d.imports + ' imports' : ''}</div>${d.docstring ? '<div class="tt-doc">' + d.docstring + '</div>' : ''}`);
+})
+.on('mouseout', () => d3.select('#tooltip').style('display', 'none'))
+.on('click', (e, d) => {
+  document.getElementById('info-panel').style.display = 'block';
+  document.getElementById('info-name').textContent = d.id;
+  document.getElementById('info-kind').textContent = `${d.kind} · ${d.layer} · ${d.imports || 0} imports`;
+  document.getElementById('info-file').textContent = d.filepath ? d.filepath.split('/').slice(-3).join('/') + ':' + d.lineno : '';
+  document.getElementById('info-doc').textContent = d.docstring || '(no documentation)';
+});
+
+sim.on('tick', () => {
+  link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+  node.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+sim.on('end', () => document.getElementById('loading').remove());
+
+// --- Search ---
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  node.style('opacity', d => !q || d.id.toLowerCase().includes(q) || d.name.toLowerCase().includes(q) ? 1 : 0.08);
+  link.style('opacity', d => {
+    if (!q) return null;
+    const s = typeof d.source === 'object' ? d.source.id : d.source;
+    const t = typeof d.target === 'object' ? d.target.id : d.target;
+    return (s.toLowerCase().includes(q) || t.toLowerCase().includes(q)) ? 0.5 : 0.01;
+  });
+});
+
+// --- Resize ---
+window.addEventListener('resize', () => {
+  const w = document.getElementById('graph').clientWidth;
+  const h = document.getElementById('graph').clientHeight;
+  svg.attr('width', w).attr('height', h);
+  sim.force('center', d3.forceCenter(w / 2, h / 2));
+  sim.alpha(0.3).restart();
+});
+</script>
+</body>
+</html>

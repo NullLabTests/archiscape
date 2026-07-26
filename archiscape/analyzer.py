@@ -1,17 +1,37 @@
 import ast
 import os
 from pathlib import Path
-from collections import defaultdict
 
-EXCLUDE_DIRS = {"node_modules", "__pycache__", ".git", ".venv", "venv", "env",
-                "dist", "build", ".egg-info", "eggs", ".tox", "mypy_cache",
-                ".pytest_cache", ".ruff_cache", "__pypackages__"}
-EXCLUDE_FILES = {"__init__.py"}
-
-def _should_exclude(path, root):
-    rel = os.path.relpath(path, root)
-    parts = rel.split(os.sep)
-    return any(p in EXCLUDE_DIRS for p in parts) or os.path.basename(path) in EXCLUDE_FILES
+STDLIB_MODULES = {
+    "os", "sys", "re", "math", "json", "csv", "io", "collections",
+    "itertools", "functools", "pathlib", "typing", "datetime",
+    "uuid", "hashlib", "base64", "textwrap", "string", "random",
+    "statistics", "decimal", "fractions", "numbers", "abc",
+    "ast", "inspect", "dis", "tokenize", "parser",
+    "asyncio", "threading", "multiprocessing", "concurrent",
+    "socket", "http", "urllib", "email", "ssl",
+    "xml", "html", "configparser", "argparse", "getopt",
+    "logging", "warnings", "traceback", "pdb",
+    "unittest", "doctest", "test",
+    "subprocess", "shutil", "glob", "fnmatch", "tempfile",
+    "pickle", "shelve", "dbm", "sqlite3",
+    "zipfile", "tarfile", "gzip", "bz2", "lzma",
+    "ctypes", "struct", "array", "mmap",
+    "dataclasses", "enum", "types", "typing",
+    "importlib", "pkgutil", "pkg_resources",
+    "signal", "platform", "resource", "sysconfig",
+    "ioctl", "fcntl", "termios",
+    "copy", "pprint", "profile", "timeit",
+    "atexit", "gc", "inspect", "trace",
+    "stat", "filecmp", "fileinput", "linecache",
+    "getpass", "curses", "tty", "pty",
+    "webbrowser", "turtle", "tkinter",
+    "sched", "calendar", "zoneinfo",
+    "dis", "opcode", "symtable",
+    "code", "codeop", "codecs",
+    "contextlib", "contextvars",
+    "weakref", "operator", "keyword",
+}
 
 
 class CodeEntity:
@@ -24,8 +44,8 @@ class CodeEntity:
         self.parent = parent
         self.children = []
         self.imports = []
-        self.calls = []
         self.decorators = []
+        self.attributes = []
 
     @property
     def full_name(self):
@@ -45,13 +65,19 @@ class CodeEntity:
             "kind": self.kind,
             "filepath": self.filepath,
             "lineno": self.lineno,
-            "docstring": (self.docstring[:200] if self.docstring else None),
+            "docstring": self.docstring[:300] if self.docstring else None,
             "parent": self.parent.full_name if self.parent else None,
             "imports": self.imports,
-            "calls": self.calls,
             "decorators": self.decorators,
+            "attributes": self.attributes,
             "children": [c.to_dict() for c in self.children],
         }
+
+
+def classify_import(name):
+    if name in STDLIB_MODULES or name.split(".")[0] in STDLIB_MODULES:
+        return "stdlib"
+    return "third_party"
 
 
 class Analyzer:
@@ -59,12 +85,20 @@ class Analyzer:
         self.path = Path(path).resolve()
         self.entities = []
         self.file_entities = {}
-        self.module_docstrings = {}
 
     def scan(self):
         py_files = sorted(self.path.rglob("*.py"))
         for filepath in py_files:
-            if _should_exclude(str(filepath), self.path):
+            rel = os.path.relpath(filepath, self.path)
+            parts = rel.split(os.sep)
+            skip = False
+            for p in parts:
+                if p in ("node_modules", "__pycache__", ".git", ".venv",
+                         "venv", "env", "dist", "build", ".egg-info",
+                         ".tox", "mypy_cache", ".pytest_cache", ".ruff_cache"):
+                    skip = True
+                    break
+            if skip:
                 continue
             self._analyze_file(filepath)
         return self._build_report()
@@ -81,41 +115,44 @@ class Analyzer:
             return
 
         rel_path = os.path.relpath(filepath, self.path)
-        module_doc = ast.get_docstring(tree)
-        if module_doc:
-            self.module_docstrings[rel_path] = module_doc[:300]
+        name = rel_path.replace("/", ".").replace("\\", ".").replace(".py", "")
+        if name.endswith(".__init__"):
+            name = name[:-9]
 
+        module_doc = ast.get_docstring(tree)
         mod_entity = CodeEntity(
-            name=rel_path.replace("/", ".").replace(".py", ""),
+            name=name,
             kind="module",
             filepath=str(filepath),
             lineno=1,
             docstring=module_doc,
         )
 
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Import):
-                for alias in node.names:
-                    mod_entity.imports.append({
-                        "name": alias.name,
-                        "alias": alias.asname,
-                        "kind": "external" if "." not in alias.name else "internal",
-                    })
-            elif isinstance(node, ast.ImportFrom):
-                module_base = node.module or ""
-                for alias in node.names:
-                    full_name = f"{module_base}.{alias.name}" if module_base else alias.name
-                    mod_entity.imports.append({
-                        "name": full_name,
-                        "alias": alias.asname,
-                        "kind": "external" if module_base and "." not in module_base else "internal",
-                    })
-
+        self._extract_imports(tree, mod_entity)
         for node in ast.iter_child_nodes(tree):
             self._extract_entity(node, mod_entity, source)
 
         self.entities.append(mod_entity)
         self.file_entities[rel_path] = mod_entity
+
+    def _extract_imports(self, tree, entity):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    entity.imports.append({
+                        "name": alias.name,
+                        "alias": alias.asname,
+                        "kind": classify_import(alias.name),
+                    })
+            elif isinstance(node, ast.ImportFrom):
+                module_base = node.module or ""
+                for alias in node.names:
+                    full_name = f"{module_base}.{alias.name}" if module_base else alias.name
+                    entity.imports.append({
+                        "name": full_name,
+                        "alias": alias.asname,
+                        "kind": classify_import(module_base or alias.name),
+                    })
 
     def _extract_entity(self, node, parent, source):
         if isinstance(node, ast.ClassDef):
@@ -129,12 +166,17 @@ class Analyzer:
                 parent=parent,
             )
             for dec in node.decorator_list:
-                cls.decorators.append(ast.unparse(dec) if hasattr(ast, "unparse") else "")
+                cls.decorators.append(ast.unparse(dec))
             for item in ast.iter_child_nodes(node):
-                if isinstance(item, ast.FunctionDef) or isinstance(item, ast.AsyncFunctionDef):
+                if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
                     self._extract_entity(item, cls, source)
-                elif isinstance(item, (ast.Assign, ast.AnnAssign)):
-                    pass
+                elif isinstance(item, ast.Assign):
+                    for target in item.targets:
+                        if isinstance(target, ast.Name):
+                            cls.attributes.append(target.id)
+                elif isinstance(item, ast.AnnAssign):
+                    if isinstance(item.target, ast.Name):
+                        cls.attributes.append(item.target.id)
             parent.children.append(cls)
 
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -148,26 +190,13 @@ class Analyzer:
                 parent=parent,
             )
             for dec in node.decorator_list:
-                func.decorators.append(ast.unparse(dec) if hasattr(ast, "unparse") else "")
+                func.decorators.append(ast.unparse(dec))
             parent.children.append(func)
 
-    def _extract_calls(self, node, entity, source):
-        for child in ast.walk(node):
-            if isinstance(child, ast.Call):
-                try:
-                    func_str = ast.unparse(child.func) if hasattr(ast, "unparse") else ""
-                    if func_str and not func_str.startswith("_"):
-                        entity.calls.append(func_str)
-                except Exception:
-                    pass
-
     def _build_report(self):
-        nodes = []
-        for ent in self.entities:
-            nodes.append(ent.to_dict())
+        nodes = [ent.to_dict() for ent in self.entities]
         return {
             "project_root": str(self.path),
             "modules_count": len(self.entities),
-            "module_docstrings": self.module_docstrings,
             "entities": nodes,
         }

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use Archiscape in research, please cite it as below."
+title: "Archiscape: AI-Powered Codebase Architecture Intelligence"
+authors:
+  - name: "NullLabTests"
+    website: "https://github.com/NullLabTests"
+version: 0.1.0
+date-released: 2026-07-26
+url: "https://github.com/NullLabTests/archiscape"
+license: MIT
+type: software
+repository-code: "https://github.com/NullLabTests/archiscape"
+keywords:
+  - software-architecture
+  - static-analysis
+  - reverse-engineering
+  - knowledge-graph
+  - visualization
+  - python
+  - empirical-software-engineering
